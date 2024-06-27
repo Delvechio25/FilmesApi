@@ -1,4 +1,6 @@
-﻿using FilmesApi.Data;
+﻿using AutoMapper;
+using FilmesApi.Data;
+using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +12,7 @@ namespace FilmesApi.Controllers;
 public class FilmeController : ControllerBase
 {
     private FilmeContext _context;
+    private IMapper _mapper;
 
     public FilmeController(FilmeContext context)
     {
@@ -17,8 +20,9 @@ public class FilmeController : ControllerBase
     }
 
     [HttpPost]
-    public CreatedAtActionResult AdicionarFilme([FromBody]Filme filme)
+    public CreatedAtActionResult AdicionarFilme([FromBody]CreateFilmeDto filmeDto)
     {
+        Filme filme = _mapper.Map<Filme>(filmeDto);
         _context.Fillmes.Add(filme);
         _context.SaveChanges();
         return CreatedAtAction(nameof(RecuperaFilmePorId), new { id = filme.Id }, filme);
