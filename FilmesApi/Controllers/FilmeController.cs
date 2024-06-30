@@ -19,7 +19,12 @@ public class FilmeController : ControllerBase
     {
         _context = context;
     }
-
+    /// <summary>
+    /// Adiciona um filme ao banco de dados
+    /// </summary>
+    /// <param name="filmeDto">Objeto com os campos necessários para criação de um filme</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
     public CreatedAtActionResult AdicionarFilme([FromBody]CreateFilmeDto filmeDto)
     {
